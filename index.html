@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Flickr Average Focal Length</title>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
+    <style media="screen">
+      body {
+        width: calc(100vw - 32px);
+        height: calc(75vh - 32px);
+        padding: 16px;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Ubuntu', sans-serif;
+        background-color: #fff;
+        color: #222;
+      }
+
+      main * {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        text-align: center;
+      }
+
+      h1 {
+        margin-bottom: 8px;
+        font-size: 20vw;
+      }
+
+      h2 {
+        font-size: 5vw;
+        opacity: 0.5;
+        font-weight: normal;
+      }
+
+      input {
+        border: 2px solid #0063dc;
+        padding: 4px;
+        border-radius: 2px;
+        color: #555;
+      }
+
+      input:focus {
+        box-shadow: 0 0 4px #aaf;
+        color: #000;
+      }
+
+      h1#title {
+        font-size: 2em;
+        margin-bottom: 16px;
+        border-bottom: 4px solid #ff0084;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="stuff">
+      <h1 id="title">Flickr Average Focal Length</h1>
+      <input type="text" id="usernameInput" placeholder="Enter Your Flickr Username and Press Enter" value="">
+    </main>
+
+    <script src="flickr-mm.js"></script>
+  </body>
+</html>
