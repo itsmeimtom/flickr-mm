@@ -20,6 +20,12 @@ function getFlickrID(username) {
     return;
   }
 
+  if(username.includes('@')) {
+    statusMsg('NSID Detected, Skipping Username Check');
+    startProcess(username, true);
+    return;
+  }
+
   statusMsg('Loading [looking up username]');
 
   let flickrURL = `https://api.flickr.com/services/rest/?method=flickr.people.findByUsername${flickrAPIKey}&username={{USERNAME}}&format=json&jsoncallback=startProcess`.replace('{{USERNAME}}',username);
@@ -30,13 +36,17 @@ function getFlickrID(username) {
   flickrScript.parentNode.removeChild(flickrScript);
 }
 
-function startProcess(flickrData) {
-    let j = flickrData;
-
-    if(!j.user) {
-      statusMsg('User Not Found!');
+function startProcess(flickrData, isNSID) {
+    if(isNSID) {
+      loadUser(flickrData);
     } else {
-      loadUser(j.user.nsid);
+      let j = flickrData;
+
+      if(!j.user) {
+        statusMsg('User Not Found!');
+      } else {
+        loadUser(j.user.nsid);
+      }
     }
 }
 
@@ -107,9 +117,14 @@ function doneEverything() {
   }
   let mm35Avg = mm35Ttl / mm35.length;
 
+  let mm35string = '';
+  if(mm35Avg) {
+    mm35string = `<h2>${parseInt(mm35Avg)}mm <span style="font-size: 0.8em; opacity: 0.8;">&mdash; 35mm equivalent</span><h2>`
+  }
+
   statusMsg(`Loading [done!]`);
   document.getElementById('stuff').innerHTML = `
-    <h1>${parseInt(mmAvg)}mm</h1>
-    <h2>${parseInt(mm35Avg)}mm <span style="font-size: 0.8em; opacity: 0.8;">&mdash; 35mm equivalent</span><h2>
+    <h1><span style="opacity: 0.5;">~</span>${parseInt(mmAvg)}mm</h1>
+    ${mm35string}
   `;
 }
