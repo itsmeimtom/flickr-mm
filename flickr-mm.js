@@ -57,6 +57,23 @@ function loadPhotos(flickrData) {
 
   for(const photo of photos) {
     statusMsg(`Loading [loading photo #${photoCount}]`);
+
+    if(photoCount <= 25) {
+      photoList.innerHTML += `
+        <div class="photo" id="photo-${photo.id}" style="
+          background-image: url('https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_q.jpg');
+          opacity: 0;
+          animation-fill-mode: forwards;
+          animation-delay: ${Math.floor(Math.random() * 10) + 0}s;
+          margin: ${Math.floor(Math.random() * 16) + 4}px;
+          height: ${Math.floor(Math.random() * 40) + 10}vh;
+          width: ${Math.floor(Math.random() * 30) + 6}vw;
+          border-radius: ${Math.floor(Math.random() * 8) + 1}px;
+        ">
+        </div>
+      `;
+    }
+
     let flickrURL = `https://api.flickr.com/services/rest/?method=flickr.photos.getExif${flickrAPIKey}&photo_id={{PHOTOID}}&page=1&per_page=1&format=json&jsoncallback=addPhoto&extras=o_dims`.replace('{{PHOTOID}}', photo.id);
 
     let flickrScript = document.createElement('script');
@@ -69,17 +86,26 @@ function loadPhotos(flickrData) {
 }
 
 let addedPhotos = 0;
+let photoList = document.getElementById('photoList');
 function addPhoto(flickrData) {
 statusMsg(`Loading [adding photo #${addedPhotos}]`);
 
-  if(!flickrData.photo.exif) return;
+  if(!flickrData) { statusMsg(`Error Adding Photo #${addedPhotos} (no data returned)`); return; }
+  if(!flickrData.photo || !flickrData.photo.exif) { statusMsg(`Error Adding Photo #${addedPhotos} (no photo or exif data)`); return; }
 
   let exif = flickrData.photo.exif;
   for (const element of exif) {
     if(element.tag == 'FocalLengthIn35mmFormat') {
-      mm35.push(parseInt(element.raw._content))
+      mm35.push(parseInt(element.raw._content));
     } else if (element.tag == 'FocalLength') {
-      mm.push(parseInt(element.raw._content))
+
+      if(document.getElementById(`photo-${flickrData.photo.id}`)) {
+        document.getElementById(`photo-${flickrData.photo.id}`).classList.add('has-mm');
+        document.getElementById(`photo-${flickrData.photo.id}`).innerHTML = `<span>${parseInt(element.raw._content)}mm</span>`;
+        document.getElementById(`photo-${flickrData.photo.id}`).style.order = parseInt(element.raw._content);
+      }
+
+      mm.push(parseInt(element.raw._content));
     } else {
       continue;
     }
@@ -109,12 +135,25 @@ function doneEverything() {
 
   let mm35string = '';
   if(mm35Avg) {
-    mm35string = `<h2>${parseInt(mm35Avg)}mm <span style="font-size: 0.8em; opacity: 0.8;">&mdash; 35mm equivalent</span><h2>`
+    mm35string = `<h2 class="animated fadeInUp">${parseInt(mm35Avg)}mm <span style="font-size: 0.8em; opacity: 0.8;">&mdash; 35mm equivalent</span><h2>`
+  }
+
+  for(const e of document.querySelectorAll('div.photo:not(.has-mm)')) {
+    e.style.display = 'none';
+  }
+
+  for(const e of document.querySelectorAll('div.photo')) {
+    e.classList.add('animated');
+    e.classList.add('fadeIn');
+
+    if(photoCount < 5) {
+      e.style['animation-delay'] = '0s';
+    }
   }
 
   statusMsg(`Loading [done!]`);
   document.getElementById('stuff').innerHTML = `
-    <h1><span style="opacity: 0.5;">~</span>${parseInt(mmAvg)}mm</h1>
+    <h1 class="animated fadeInUp"><span style="opacity: 0.5;">~</span>${parseInt(mmAvg)}mm</h1>
     ${mm35string}
   `;
 }

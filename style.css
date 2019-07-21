@@ -1,0 +1,100 @@
+body {
+  width: calc(100vw - 32px);
+  height: calc(75vh - 32px);
+  padding: 16px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Ubuntu', sans-serif;
+  background-color: #fff;
+  color: #222;
+
+  overflow: hidden;
+}
+
+main * {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 8px;
+  font-size: 20vw;
+}
+
+h2 {
+  font-size: 5vw;
+  opacity: 0.5;
+  font-weight: normal;
+}
+
+input {
+  border: 2px solid #0063dc;
+  padding: 4px;
+  border-radius: 2px;
+  color: #555;
+}
+
+input:focus {
+  box-shadow: 0 0 4px #aaf;
+  color: #000;
+}
+
+p {
+  font-size: 0.6em;
+  opacity: 0.8;
+  text-align: right;
+  margin-top: 4px;
+  font-style: italic;
+}
+
+h1#title {
+  font-size: 2em;
+  margin-bottom: 16px;
+  border-bottom: 4px solid #ff0084;
+}
+
+aside#photoList {
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: visible;
+
+  display: flex;
+  flex-wrap: wrap-reverse;
+  align-items: flex-start;
+  justify-content: space-evenly;
+
+  z-index: -1;
+  filter: saturate(80%) blur(2px);
+  opacity: 0.4;
+  transform: scale(1.2);
+
+  pointer-events: none;
+}
+
+aside#photoList div.photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px;
+  max-width: 20vw;
+  max-height: 20vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+aside#photoList div.photo span {
+  font-weight: bolder;
+  font-family: monospace;
+  color: #fff;
+  font-size: 5em;
+  -webkit-text-stroke: 4px #000;
+  text-stroke: 4px #000;
+  opacity: 0.5;
+}
