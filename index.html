@@ -49,6 +49,14 @@
         color: #000;
       }
 
+      p {
+        font-size: 0.6em;
+        opacity: 0.8;
+        text-align: right;
+        margin-top: 4px;
+        font-style: italic;
+      }
+
       h1#title {
         font-size: 2em;
         margin-bottom: 16px;
@@ -59,7 +67,12 @@
   <body>
     <main id="stuff">
       <h1 id="title">Flickr Average Focal Length</h1>
-      <input type="text" id="usernameInput" placeholder="Enter Your Flickr Username and Press Enter" value="">
+      <input type="text" id="usernameInput" placeholder="Enter your Flickr Username and Press Enter" value="">
+      <p>
+        By 'username', I mean what you have set as your photostream URL<br>
+        For example: flickr.com/photos/<b><u>mrdnomaid</u></b>/<br><br>
+        If you know it, you can also use your NSID (it looks like this: 157272093@N07)
+      </p>
     </main>
 
     <script src="flickr-mm.js"></script>
