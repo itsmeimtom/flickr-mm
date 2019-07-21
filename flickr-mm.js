@@ -16,19 +16,13 @@ function statusMsg(message) {
 
 function getFlickrID(username) {
   if(!username) {
-    statusMsg('Please Enter a Username!');
+    statusMsg('Please Enter a Photostream URL!');
     return;
   }
 
-  if(username.includes('@')) {
-    statusMsg('NSID Detected, Skipping Username Check');
-    startProcess(username, true);
-    return;
-  }
+  statusMsg('Loading [looking up your URL]');
 
-  statusMsg('Loading [looking up username]');
-
-  let flickrURL = `https://api.flickr.com/services/rest/?method=flickr.people.findByUsername${flickrAPIKey}&username={{USERNAME}}&format=json&jsoncallback=startProcess`.replace('{{USERNAME}}',username);
+  let flickrURL = `https://api.flickr.com/services/rest/?method=flickr.urls.lookupUser${flickrAPIKey}&url={{USERNAME}}&format=json&jsoncallback=startProcess`.replace('{{USERNAME}}',username);
 
   let flickrScript = document.createElement('script');
   flickrScript.src = flickrURL;
@@ -36,17 +30,13 @@ function getFlickrID(username) {
   flickrScript.parentNode.removeChild(flickrScript);
 }
 
-function startProcess(flickrData, isNSID) {
-    if(isNSID) {
-      loadUser(flickrData);
-    } else {
-      let j = flickrData;
+function startProcess(flickrData) {
+    let j = flickrData;
 
-      if(!j.user) {
-        statusMsg('User Not Found!');
-      } else {
-        loadUser(j.user.nsid);
-      }
+    if(!j.user) {
+      statusMsg('User Not Found!');
+    } else {
+      loadUser(j.user.id);
     }
 }
 
