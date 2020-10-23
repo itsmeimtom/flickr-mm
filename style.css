@@ -7,8 +7,8 @@ body {
   justify-content: center;
   align-items: center;
   font-family: 'Ubuntu', sans-serif;
-  background-color: #fff;
-  color: #222;
+  background-color: #000;
+  color: #eee;
 
   overflow: hidden;
 }

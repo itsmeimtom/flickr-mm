@@ -76,7 +76,7 @@ function loadPhotos(flickrData) {
           background-image: url('https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_q.jpg');
           opacity: 0;
           animation-fill-mode: forwards;
-          animation-delay: ${Math.floor(Math.random() * 10) + 0}s;
+          animation-delay: ${Math.floor(Math.random() * 10)}s;
           margin: ${Math.floor(Math.random() * 16) + 4}px;
           height: ${Math.floor(Math.random() * 40) + 10}vh;
           width: ${Math.floor(Math.random() * 30) + 6}vw;
@@ -103,7 +103,7 @@ function loadPhotos(flickrData) {
 let addedPhotos = 0; // Count of photos that have been added
 let photoList = document.getElementById('photoList'); // The fancy background element
 function addPhoto(flickrData) {
-statusMsg(`Loading [adding photo #${addedPhotos}]`);
+  statusMsg(`Loading [adding photo #${addedPhotos}]`);
 
   // If there's no data or no photos/exif data then we don't do anything
   if(!flickrData) { statusMsg(`Error Adding Photo #${addedPhotos} (no data returned)`); return; }
